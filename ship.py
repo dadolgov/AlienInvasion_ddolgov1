@@ -29,9 +29,10 @@ class Ship:
 
         self.image=pygame.image.load(self.settings.ship_file)
         self.image=pygame.transform.scale(self.image, (self.settings.ship_w, self.settings.ship_h))
+        self.image = pygame.transform.rotate(self.image, 270)
 
         self.rect=self.image.get_rect()
-        self.rect.midbottom=self.boundaries.midbottom
+        self.rect.midleft=self.boundaries.midleft
         self.moving_right=False
         self.moving_left=False
         self.x=float(self.rect.x)
