@@ -1,3 +1,10 @@
+"""Alien Invasion. A 2D spcae shootemup game.
+Author: Dmitrii Dolgov / Gabriel Walters
+Date: 4/9/2026
+Starter code by Gabriel Walters https://github.com/RedBeard41/alien_Invasion_starter
+    """
+
+
 import sys
 import pygame
 from settings import Settings
@@ -5,7 +12,11 @@ from ship import Ship
 from arsenal import Arsenal
 
 class AlienInvasion:
+    """Main game class. Contains methods for core systems: events, sound and picture
+    """
     def __init__(self)->None:
+        """initializes the game, settings, screen and sound, controls and events
+        """
         pygame.init()
         self.settings=Settings()
 
@@ -25,6 +36,8 @@ class AlienInvasion:
         self.ship=Ship(self, Arsenal(self))
     
     def run_game(self)->None:
+        """Main game loop. Checks for events and updates the screen
+        """
         #game loop
         while self.running:
             self._check_events()
@@ -34,11 +47,15 @@ class AlienInvasion:
             self.clock.tick(self.settings.fps)
 
     def _update_screen(self)->None:
+        """updates background and ship sprite
+        """
         self.screen.blit(self.bg, (0,0))
         self.ship.draw()
         pygame.display.flip()
 
     def _check_events(self)->None:
+        """gets and processes game events: keypresses and window closing
+        """
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 self.running=False
@@ -49,6 +66,12 @@ class AlienInvasion:
             elif event.type==pygame.KEYUP:
                 self._check_keyup_event(event)
     def _check_keydown_event(self, event):
+        """processes the key press events. Arrows move the ship, Q closes the game,
+        SPACE fires the lasers
+
+        Args:
+            event (pygame): KEYDOWN event
+        """
         if event.key==pygame.K_RIGHT:
             self.ship.moving_right=True
         elif event.key==pygame.K_LEFT:
@@ -65,6 +88,11 @@ class AlienInvasion:
             
 
     def _check_keyup_event(self, event):
+        """Processes the release of buttons. Releasing move buttons stops the movement of the ship
+
+        Args:
+            event (pygame): KEYUP event
+        """
         if event.key==pygame.K_RIGHT:
             self.ship.moving_right=False
         elif event.key==pygame.K_LEFT:

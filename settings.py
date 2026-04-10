@@ -1,5 +1,11 @@
+"""game settings, asset links and gameplay constants
+Author: Dmitrii Dolgov
+Date: 4/9/2026
+    """
 from pathlib import Path
 class Settings:
+    """sets up the screen size and name, path to image and sound files, constant gameplay parameters.
+    """
     def __init__(self):
         self.name: str="Alien Invasion"
         self.screen_w:int=1200

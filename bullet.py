@@ -1,3 +1,7 @@
+"""methods and settings related to in-game projectile
+Author: Dmitrii Dolgov
+Date: 4/9/2026
+    """
 import pygame
 from pygame.sprite import Sprite
 from typing import TYPE_CHECKING
@@ -6,8 +10,18 @@ if TYPE_CHECKING:
     from alien_invasion import AlienInvasion
 
 class Bullet(Sprite):
-    
+    """Holds settings and methods for a standard bullet
+
+    Args:
+        Sprite : image of a bullet, .png
+    """
     def __init__(self, game:"AlienInvasion")->None:
+        """references the screen and game settings, links the sprites,
+        sets up the size of the sprite used
+
+        Args:
+            game (AlienInvasion): active game instance
+        """
         super().__init__()
         self.screen=game.screen
         self.settings=game.settings
@@ -20,8 +34,12 @@ class Bullet(Sprite):
         self.y = float(self.rect.y)
 
     def update(self)->None:
+        """updates the position of a bullet
+        """
         self.y-=self.settings.bullet_speed
         self.rect.y=self.y
     
     def draw_bullet(self)->None:
+        """draws the bullet on a screen
+        """
         self.screen.blit(self.image, self.rect)
