@@ -28,16 +28,17 @@ class Bullet(Sprite):
 
         self.image=pygame.image.load(self.settings.bullet_file)
         self.image=pygame.transform.scale(self.image,(self.settings.bullet_w, self.settings.bullet_h))
+        self.image=pygame.transform.rotate(self.image,270)
 
         self.rect=self.image.get_rect()
-        self.rect.midtop=game.ship.rect.midtop
-        self.y = float(self.rect.y)
+        self.rect.midleft=game.ship.rect.midleft
+        self.x = float(self.rect.x)
 
     def update(self)->None:
         """updates the position of a bullet
         """
-        self.y-=self.settings.bullet_speed
-        self.rect.y=self.y
+        self.x+=self.settings.bullet_speed
+        self.rect.x=self.x
     
     def draw_bullet(self)->None:
         """draws the bullet on a screen

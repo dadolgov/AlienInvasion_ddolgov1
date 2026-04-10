@@ -34,7 +34,7 @@ class Arsenal:
         """removes a bullet once it reaches the end of screen
         """
         for bullet in self.arsenal.copy():
-            if bullet.rect.bottom<=0:
+            if bullet.rect.left>=self.settings.screen_w:
                 self.arsenal.remove(bullet)
 
     def draw(self)->None:
