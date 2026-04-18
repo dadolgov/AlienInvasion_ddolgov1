@@ -10,6 +10,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from arsenal import Arsenal
+from alien_fleet import AlienFleet
 
 class AlienInvasion:
     """Main game class. Contains methods for core systems: events, sound and picture
@@ -34,6 +35,9 @@ class AlienInvasion:
         self.laser_sound.set_volume(0.7)
 
         self.ship=Ship(self, Arsenal(self))
+        self.alien_fleet=AlienFleet(self)
+        self.alien_fleet.create_fleet()
+        self.game_active=True
     
     def run_game(self)->None:
         """Main game loop. Checks for events and updates the screen
@@ -51,6 +55,7 @@ class AlienInvasion:
         """
         self.screen.blit(self.bg, (0,0))
         self.ship.draw()
+        self.alien_fleet.draw()
         pygame.display.flip()
 
     def _check_events(self)->None:
