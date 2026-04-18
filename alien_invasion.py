@@ -43,6 +43,9 @@ class AlienInvasion:
         self.game_active=True
 
     def _check_collisions(self):
+        """Checks collisions between player and aliens, bullets and aliens, 
+        aliens and the player's screen edge
+        """
         collisions=self.alien_fleet.check_collisions(self.ship.arsenal.arsenal)
         if collisions:
             self.impact_sound.play()
