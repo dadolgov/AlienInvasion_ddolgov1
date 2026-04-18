@@ -38,7 +38,13 @@ class Ship:
         self.y=float(self.rect.y)
 
         self.arsenal=arsenal
-    
+
+    def _center_ship(self):
+        """resets the ship positionsing
+        """
+        self.rect.midleft=self.boundaries.midleft
+        self.y=float(self.rect.y)
+
     def update(self):
         """updating the position of the ship and weapon status"""
         self._update_ship_movement()

@@ -8,9 +8,12 @@ Starter code by Gabriel Walters https://github.com/RedBeard41/alien_Invasion_sta
 import sys
 import pygame
 from settings import Settings
+from game_stats import GameStats
 from ship import Ship
 from arsenal import Arsenal
 from alien_fleet import AlienFleet
+
+from time import sleep
 
 class AlienInvasion:
     """Main game class. Contains methods for core systems: events, sound and picture
@@ -20,6 +23,7 @@ class AlienInvasion:
         """
         pygame.init()
         self.settings=Settings()
+        self.game_stats=GameStats(self.settings.starting_ship_count)
 
         self.screen=pygame.display.set_mode((self.settings.screen_w, self.settings.screen_h))
         pygame.display.set_caption(self.settings.name)
@@ -46,10 +50,39 @@ class AlienInvasion:
         """Checks collisions between player and aliens, bullets and aliens, 
         aliens and the player's screen edge
         """
+        if self.ship.check_collisions(self.alien_fleet.fleet):
+            self._check_game_status()
+        
+        if self.alien_fleet.check_fleet_bottom():
+            self._check_game_status()
+
         collisions=self.alien_fleet.check_collisions(self.ship.arsenal.arsenal)
         if collisions:
             self.impact_sound.play()
             self.impact_sound.fadeout(500)
+
+        if self.alien_fleet.check_destroyed_status():
+            self._reset_level()
+    
+    def _check_game_status(self):
+        """resets the level or ends the game depending on remaining lives
+        """
+        if self.game_stats.ships_left>0:
+            self.game_stats.ships_left-=1
+            self._reset_level()
+            sleep(0.5)
+        else:
+            self.game_active=False
+
+        print(self.game_stats.ships_left)
+
+    def _reset_level(self):
+        """Erases the bullets and the fleet, generates a new one
+        """
+        self.ship.arsenal.arsenal.empty()
+        self.alien_fleet.fleet.empty()
+        self.alien_fleet.create_fleet()
+
     
     def run_game(self)->None:
         """Main game loop. Checks for events and updates the screen
