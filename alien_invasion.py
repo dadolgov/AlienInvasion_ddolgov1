@@ -43,7 +43,7 @@ class AlienInvasion:
 
         self.ship=Ship(self, Arsenal(self))
         self.alien_fleet=AlienFleet(self)
-        self.alien_fleet.create_fleet()
+
         self.game_active=True
 
     def _check_collisions(self):
